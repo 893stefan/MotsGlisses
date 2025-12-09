@@ -4,6 +4,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        Console.Clear();
         // chemins vers les fichiers (en fonction de ta structure réelle)
         string fichierDico = "../txt-files/Mots_Francais.txt";
         string fichierLettres = "../txt-files/Lettre.txt";

@@ -56,6 +56,7 @@ public class Jeu
     // -------------------------
     public void Lancer()
     {
+        Console.Clear();
         bool continuer = true;
 
         while (continuer)
@@ -68,6 +69,8 @@ public class Jeu
 
             Console.Write("Entrez un mot (ou STOP pour quitter) : ");
             string mot = Console.ReadLine().ToLower();
+
+            Console.Clear();
 
             if (mot == "stop")
                 continuer = false;

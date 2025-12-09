@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MotsGlisses")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3271fbb99234abdc513935326f8025a919edf6aa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b99486d15ed48be7d0fdd9234114ee0ff84e04b")]
 [assembly: System.Reflection.AssemblyProductAttribute("MotsGlisses")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MotsGlisses")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
