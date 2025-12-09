@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZiTfgbzEXjg=",
+  "success": true,
+  "projectFilePath": "/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/MotsGlisses.csproj",
+  "expectedPackageFiles": [
+    "/home/stefanskeletrix/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.9/microsoft.aspnetcore.app.ref.9.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}
