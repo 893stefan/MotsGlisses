@@ -20,6 +20,7 @@ public class Program
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
+            AfficherAsciiEsilv();
             Console.WriteLine("=== Jeu des Mots Glissés ===");
             Console.ResetColor();
             Console.WriteLine("1) Nouvelle partie");
@@ -120,11 +121,8 @@ public class Program
 
     private static void AfficherLicence()
     {
-        string cwdPath = Path.Combine(Directory.GetCurrentDirectory(), "LICENSE");
-        string baseDirPath = Path.Combine(AppContext.BaseDirectory, "LICENSE");
-        string licencePath = File.Exists(cwdPath) ? cwdPath : baseDirPath;
-
-        if (!File.Exists(licencePath))
+        string? licencePath = TrouverLicence();
+        if (licencePath == null)
         {
             Console.WriteLine("Fichier LICENSE introuvable.");
         }
@@ -136,5 +134,45 @@ public class Program
 
         Console.WriteLine("\nAppuyez sur une touche pour revenir au menu...");
         Console.ReadKey(intercept: true);
+    }
+
+    private static string? TrouverLicence()
+    {
+        string[] bases = { Directory.GetCurrentDirectory(), AppContext.BaseDirectory };
+
+        foreach (string start in bases)
+        {
+            string dir = Path.GetFullPath(start);
+            for (int i = 0; i < 5 && dir != null; i++)
+            {
+                string candidate = Path.Combine(dir, "LICENSE");
+                if (File.Exists(candidate))
+                    return candidate;
+
+                DirectoryInfo? parent = Directory.GetParent(dir);
+                if (parent == null)
+                    break;
+                dir = parent.FullName;
+            }
+        }
+
+        return null;
+    }
+
+    private static void AfficherAsciiEsilv()
+    {
+        string[] lignes =
+        {
+            " _____   ____    ___   _      __      __",
+            "| ____| / ___|  |_ _| | |     \\ \\    / /",
+            "|  _|   \\___ \\   | |  | |    \\ \\  / / ",
+            "| |___   ___) |  | |  | |___    \\ \\/ /  ",
+            "|_____| |____/  |___| |_____|    \\__/   "
+        };
+
+        foreach (string ligne in lignes)
+            Console.WriteLine(ligne);
+        
+        Console.WriteLine();
     }
 }
