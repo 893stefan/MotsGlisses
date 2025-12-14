@@ -7,8 +7,8 @@ using System.Threading;
 public class Jeu
 {
     private const string Separator = "-----";
-    private const int TempsPartieSec = 400;
     private readonly int tempsTourSec;
+    private readonly int tempsPartieSec;
 
     // -------------------------
     // ATTRIBUTS
@@ -20,16 +20,16 @@ public class Jeu
     private Plateau plateau;
 
     private int tourActuel; // 1 = joueur1, 2 = joueur2
-    private const int TempsTourSec = 40;
 
     // -------------------------
     // CONSTRUCTEUR
     // -------------------------
-    public Jeu(string fichierDico, string fichierLettres, int lignes, int colonnes, int tempsTourSec, string? fichierPlateauCsv = null)
+    public Jeu(string fichierDico, string fichierLettres, int lignes, int colonnes, int tempsTourSec, string? fichierPlateauCsv = null, int tempsPartieSec = 400)
     {
         dico = new Dictionnaire(fichierDico);
         plateau = fichierPlateauCsv == null ? new Plateau(fichierLettres, lignes, colonnes) : new Plateau(fichierPlateauCsv);
         this.tempsTourSec = tempsTourSec > 0 ? tempsTourSec : 40;
+        this.tempsPartieSec = tempsPartieSec > 0 ? tempsPartieSec : 400;
 
         Console.Write("Nom joueur 1 : ");
         joueur1 = new Joueur(LireNom("Joueur 1"));
@@ -66,7 +66,7 @@ public class Jeu
     {
         Console.Clear();
         bool continuer = true;
-        DateTime limitePartie = DateTime.UtcNow.AddSeconds(TempsPartieSec);
+        DateTime limitePartie = DateTime.UtcNow.AddSeconds(tempsPartieSec);
 
         while (continuer && DateTime.UtcNow < limitePartie)
         {
@@ -80,7 +80,7 @@ public class Jeu
             Console.WriteLine($" {Separator} ");
 
             string prompt = "Entrez un mot (ou STOP pour quitter) : ";
-            string? entree = LireMotAvecChrono(tempsTourSec, prompt);
+            string? entree = LireMotAvecChrono(tempsTourSec, prompt, limitePartie);
 
             if (DateTime.UtcNow >= limitePartie)
                 break;
@@ -108,6 +108,10 @@ public class Jeu
             else if (!dico.RechDichoRecursif(mot))
             {
                 Console.WriteLine("Mot invalide !");
+            }
+            else if (j.Contient(mot))
+            {
+                Console.WriteLine("Mot déjà utilisé par ce joueur !");
             }
             else
             {
@@ -163,7 +167,7 @@ public class Jeu
         return string.IsNullOrWhiteSpace(lu) ? defaut : lu;
     }
 
-    private string? LireMotAvecChrono(int secondes, string prompt)
+    private string? LireMotAvecChrono(int secondes, string prompt, DateTime limitePartie)
     {
         StringBuilder sb = new StringBuilder();
         DateTime limite = DateTime.UtcNow.AddSeconds(secondes);
@@ -171,9 +175,9 @@ public class Jeu
         int lastTimerLength = 0;
         int baseTop = Console.CursorTop;
 
-        RedessinerLigne(prompt, sb.ToString(), secondes, baseTop, ref lastPromptLength, ref lastTimerLength);
+        RedessinerLigne(prompt, sb.ToString(), secondes, baseTop, ref lastPromptLength, ref lastTimerLength, limitePartie);
 
-        while (DateTime.UtcNow < limite)
+        while (DateTime.UtcNow < limite && DateTime.UtcNow < limitePartie)
         {
             while (Console.KeyAvailable)
             {
@@ -198,11 +202,11 @@ public class Jeu
                     sb.Append(key.KeyChar);
                 }
 
-                RedessinerLigne(prompt, sb.ToString(), Restant(limite), baseTop, ref lastPromptLength, ref lastTimerLength);
+                RedessinerLigne(prompt, sb.ToString(), Restant(limite), baseTop, ref lastPromptLength, ref lastTimerLength, limitePartie);
             }
 
             Thread.Sleep(50);
-            RedessinerLigne(prompt, sb.ToString(), Restant(limite), baseTop, ref lastPromptLength, ref lastTimerLength);
+            RedessinerLigne(prompt, sb.ToString(), Restant(limite), baseTop, ref lastPromptLength, ref lastTimerLength, limitePartie);
         }
 
         Console.SetCursorPosition(0, baseTop + 2);
@@ -228,10 +232,11 @@ public class Jeu
         Console.WriteLine($" | Score : {joueur.Score} | Mots trouvés : {joueur.NbMotsTrouves}");
     }
 
-    private void RedessinerLigne(string prompt, string saisie, int secondesRestantes, int baseTop, ref int lastPromptLength, ref int lastTimerLength)
+    private void RedessinerLigne(string prompt, string saisie, int secondesRestantes, int baseTop, ref int lastPromptLength, ref int lastTimerLength, DateTime limitePartie)
     {
         Console.SetCursorPosition(0, baseTop);
-        string timerLine = $"Temps restant : {secondesRestantes}s";
+        int partieRestante = Restant(limitePartie);
+        string timerLine = $"Tour : {secondesRestantes}s | Partie : {partieRestante}s";
         int timerPadding = Math.Max(0, lastTimerLength - timerLine.Length);
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write($"{timerLine}{new string(' ', timerPadding)}");

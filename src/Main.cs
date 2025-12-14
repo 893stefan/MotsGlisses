@@ -15,6 +15,7 @@ public class Program
         int lignes = 10;
         int colonnes = 10;
         int tempsTourSec = 40;
+        int tempsPartieSec = 400;
 
         bool quitter = false;
 
@@ -36,15 +37,15 @@ public class Program
             switch (choix)
             {
                 case "1":
-                    LancerJeu(fichierDico, fichierLettres, lignes, colonnes, tempsTourSec, null);
+                    LancerJeu(fichierDico, fichierLettres, lignes, colonnes, tempsTourSec, tempsPartieSec, null);
                     break;
                 case "2":
                     string? cheminCsv = SelectionnerPartieDepuisCsv();
                     if (cheminCsv != null)
-                        LancerJeu(fichierDico, fichierLettres, lignes, colonnes, tempsTourSec, cheminCsv);
+                        LancerJeu(fichierDico, fichierLettres, lignes, colonnes, tempsTourSec, tempsPartieSec, cheminCsv);
                     break;
                 case "3":
-                    tempsTourSec = AjusterParametres(tempsTourSec);
+                    (tempsTourSec, tempsPartieSec) = AjusterParametres(tempsTourSec, tempsPartieSec);
                     break;
                 case "4":
                     AfficherLicence();
@@ -62,11 +63,11 @@ public class Program
         Console.WriteLine("À bientôt !");
     }
 
-    private static void LancerJeu(string fichierDico, string fichierLettres, int lignes, int colonnes, int tempsTourSec, string? plateauCsv)
+    private static void LancerJeu(string fichierDico, string fichierLettres, int lignes, int colonnes, int tempsTourSec, int tempsPartieSec, string? plateauCsv)
     {
         try
         {
-            Jeu jeu = new Jeu(fichierDico, fichierLettres, lignes, colonnes, tempsTourSec, plateauCsv);
+            Jeu jeu = new Jeu(fichierDico, fichierLettres, lignes, colonnes, tempsTourSec, plateauCsv, tempsPartieSec);
             jeu.Lancer();
             Console.WriteLine("Merci d'avoir joué !");
             Console.WriteLine("Appuyez sur une touche pour revenir au menu...");
@@ -134,15 +135,19 @@ public class Program
         return chemin;
     }
 
-    private static int AjusterParametres(int tempsTourSec)
+    private static (int tempsTourSec, int tempsPartieSec) AjusterParametres(int tempsTourSec, int tempsPartieSec)
     {
         Console.WriteLine($"\nDurée du tour actuelle (s) : {tempsTourSec}");
         Console.Write("Nouvelle durée (laisser vide pour conserver) : ");
         tempsTourSec = LireEntierOuDefaut(Console.ReadLine(), tempsTourSec, min: 1);
 
+        Console.WriteLine($"\nDurée totale de la partie actuelle (s) : {tempsPartieSec}");
+        Console.Write("Nouvelle durée (laisser vide pour conserver) : ");
+        tempsPartieSec = LireEntierOuDefaut(Console.ReadLine(), tempsPartieSec, min: 1);
+
         Console.WriteLine("\nParamètres mis à jour. Appuyez sur une touche pour revenir au menu...");
         Console.ReadKey(intercept: true);
-        return tempsTourSec;
+        return (tempsTourSec, tempsPartieSec);
     }
 
     private static int LireEntierOuDefaut(string? saisie, int valeurActuelle, int min)
