@@ -12,9 +12,20 @@ Petit jeu console en C# où deux joueurs s'affrontent sur un plateau de lettres 
 - Le gagnant est celui avec le meilleur score.
 
 ### Lancement
+
+**Depuis un terminal** : 
+
 ```bash
 dotnet run
 ```
+
+**Depuis visual studio** : 
+
+1. Installer le SDK .NET 9 (ou la dernière version prise en charge par votre VS2022) puis ouvrir `MotsGlisses.csproj` via *Fichier > Ouvrir > Projet/Solution* ou en double-cliquant sur le fichier.
+2. Vérifier dans la barre d'outils que la configuration est `Debug` et que le projet `MotsGlisses` est bien sélectionné comme projet de démarrage.
+3. Construire avec `Ctrl+Maj+B` (*Générer > Générer la solution*) pour que les fichiers texte soient copiés dans `bin/.../src/txt-files/`.
+4. Lancer le jeu avec `F5` (débogage) ou `Ctrl+F5` (sans débogage) pour ouvrir la console intégrée et jouer.
+
 Les fichiers texte sont copiés automatiquement dans `bin/.../src/txt-files/`.
 
 ### Fichiers importants
