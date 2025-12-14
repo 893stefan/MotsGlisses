@@ -41,7 +41,7 @@ public class Program
                         LancerJeu(fichierDico, fichierLettres, lignes, colonnes, tempsTourSec, cheminCsv);
                     break;
                 case "3":
-                    (lignes, colonnes, tempsTourSec) = AjusterParametres(lignes, colonnes, tempsTourSec);
+                    tempsTourSec = AjusterParametres(tempsTourSec);
                     break;
                 case "4":
                     AfficherLicence();
@@ -95,23 +95,15 @@ public class Program
         return chemin;
     }
 
-    private static (int lignes, int colonnes, int tempsTourSec) AjusterParametres(int lignes, int colonnes, int tempsTourSec)
+    private static int AjusterParametres(int tempsTourSec)
     {
         Console.WriteLine($"\nDurée du tour actuelle (s) : {tempsTourSec}");
         Console.Write("Nouvelle durée (laisser vide pour conserver) : ");
         tempsTourSec = LireEntierOuDefaut(Console.ReadLine(), tempsTourSec, min: 1);
 
-        Console.WriteLine($"\nLignes actuelles : {lignes}");
-        Console.Write("Nouvelles lignes (laisser vide pour conserver) : ");
-        lignes = LireEntierOuDefaut(Console.ReadLine(), lignes, min: 1);
-
-        Console.WriteLine($"\nColonnes actuelles : {colonnes}");
-        Console.Write("Nouvelles colonnes (laisser vide pour conserver) : ");
-        colonnes = LireEntierOuDefaut(Console.ReadLine(), colonnes, min: 1);
-
         Console.WriteLine("\nParamètres mis à jour. Appuyez sur une touche pour revenir au menu...");
         Console.ReadKey(intercept: true);
-        return (lignes, colonnes, tempsTourSec);
+        return tempsTourSec;
     }
 
     private static int LireEntierOuDefaut(string? saisie, int valeurActuelle, int min)
