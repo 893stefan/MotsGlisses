@@ -6,6 +6,9 @@ using System.Threading;
 
 public class Jeu
 {
+    private const string Separator = "-----";
+    private readonly int tempsTourSec;
+
     // -------------------------
     // ATTRIBUTS
     // -------------------------
@@ -21,10 +24,11 @@ public class Jeu
     // -------------------------
     // CONSTRUCTEUR
     // -------------------------
-    public Jeu(string fichierDico, string fichierLettres, int lignes, int colonnes)
+    public Jeu(string fichierDico, string fichierLettres, int lignes, int colonnes, int tempsTourSec, string? fichierPlateauCsv = null)
     {
         dico = new Dictionnaire(fichierDico);
-        plateau = new Plateau(fichierLettres, lignes, colonnes);
+        plateau = fichierPlateauCsv == null ? new Plateau(fichierLettres, lignes, colonnes) : new Plateau(fichierPlateauCsv);
+        this.tempsTourSec = tempsTourSec > 0 ? tempsTourSec : 40;
 
         Console.Write("Nom joueur 1 : ");
         joueur1 = new Joueur(LireNom("Joueur 1"));
@@ -64,14 +68,17 @@ public class Jeu
 
         while (continuer)
         {
-            Console.WriteLine("\nPlateau actuel :");
-            Console.WriteLine(plateau.ToString());
-
             Joueur j = JoueurActuel();
-            Console.WriteLine($"Tour de : {j.Nom} (score {j.Score})");
+            Console.Write("Tour de : ");
+            AfficherNomCouleur(j);
+            Console.WriteLine($" (score {j.Score})");
+            Console.WriteLine($" {Separator} ");
+
+            Console.Write(plateau.ToString());
+            Console.WriteLine($" {Separator} ");
 
             string prompt = "Entrez un mot (ou STOP pour quitter) : ";
-            string? entree = LireMotAvecChrono(TempsTourSec, prompt);
+            string? entree = LireMotAvecChrono(tempsTourSec, prompt);
 
             if (entree == null)
             {
@@ -108,6 +115,7 @@ public class Jeu
                     Console.WriteLine("Mot trouvé !");
                     int poids = plateau.ScorePourChemin(res);
                     int points = mot.Length + poids;
+                    plateau.Add_Mot(mot);
                     j.AjouterScore(points);
                     Console.WriteLine($"+{points} points (longueur {mot.Length} + poids lettres {poids})");
                     j.IncrementeMots();
@@ -116,6 +124,7 @@ public class Jeu
                 }
             }
 
+            Console.WriteLine($" {Separator} ");
             ChangerTour();
         }
 
@@ -128,8 +137,8 @@ public class Jeu
     private void FinDuJeu()
     {
         Console.WriteLine("\n=== Fin du jeu ===");
-        Console.WriteLine(joueur1.ToString());
-        Console.WriteLine(joueur2.ToString());
+        AfficherResumeJoueur(joueur1);
+        AfficherResumeJoueur(joueur2);
 
         if (joueur1.Score > joueur2.Score)
             Console.WriteLine($"\nGagnant (meilleur score) : {joueur1.Nom} avec {joueur1.Score} points");
@@ -149,9 +158,11 @@ public class Jeu
     {
         StringBuilder sb = new StringBuilder();
         DateTime limite = DateTime.UtcNow.AddSeconds(secondes);
-        int lastLineLength = 0;
+        int lastPromptLength = 0;
+        int lastTimerLength = 0;
+        int baseTop = Console.CursorTop;
 
-        RedessinerLigne(prompt, sb.ToString(), secondes, ref lastLineLength);
+        RedessinerLigne(prompt, sb.ToString(), secondes, baseTop, ref lastPromptLength, ref lastTimerLength);
 
         while (DateTime.UtcNow < limite)
         {
@@ -161,6 +172,7 @@ public class Jeu
 
                 if (key.Key == ConsoleKey.Enter)
                 {
+                    Console.SetCursorPosition(0, baseTop + 2);
                     Console.WriteLine();
                     return sb.ToString();
                 }
@@ -177,13 +189,14 @@ public class Jeu
                     sb.Append(key.KeyChar);
                 }
 
-                RedessinerLigne(prompt, sb.ToString(), Restant(limite), ref lastLineLength);
+                RedessinerLigne(prompt, sb.ToString(), Restant(limite), baseTop, ref lastPromptLength, ref lastTimerLength);
             }
 
             Thread.Sleep(50);
-            RedessinerLigne(prompt, sb.ToString(), Restant(limite), ref lastLineLength);
+            RedessinerLigne(prompt, sb.ToString(), Restant(limite), baseTop, ref lastPromptLength, ref lastTimerLength);
         }
 
+        Console.SetCursorPosition(0, baseTop + 2);
         Console.WriteLine();
         return null;
     }
@@ -191,11 +204,36 @@ public class Jeu
     private int Restant(DateTime limite) =>
         Math.Max(0, (int)Math.Ceiling((limite - DateTime.UtcNow).TotalSeconds));
 
-    private void RedessinerLigne(string prompt, string saisie, int secondesRestantes, ref int lastLineLength)
+    private void AfficherNomCouleur(Joueur joueur)
     {
-        string ligne = $"{prompt}{saisie} [{secondesRestantes}s]";
-        int padding = Math.Max(0, lastLineLength - ligne.Length);
-        Console.Write($"\r{ligne}{new string(' ', padding)}");
-        lastLineLength = ligne.Length;
+        ConsoleColor color = joueur == joueur1 ? ConsoleColor.Blue : ConsoleColor.Red;
+        Console.ForegroundColor = color;
+        Console.Write(joueur.Nom);
+        Console.ResetColor();
+    }
+
+    private void AfficherResumeJoueur(Joueur joueur)
+    {
+        Console.Write("Joueur : ");
+        AfficherNomCouleur(joueur);
+        Console.WriteLine($" | Score : {joueur.Score} | Mots trouvés : {joueur.NbMotsTrouves}");
+    }
+
+    private void RedessinerLigne(string prompt, string saisie, int secondesRestantes, int baseTop, ref int lastPromptLength, ref int lastTimerLength)
+    {
+        Console.SetCursorPosition(0, baseTop);
+        string timerLine = $"Temps restant : {secondesRestantes}s";
+        int timerPadding = Math.Max(0, lastTimerLength - timerLine.Length);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write($"{timerLine}{new string(' ', timerPadding)}");
+        Console.ResetColor();
+        lastTimerLength = timerLine.Length;
+
+        Console.SetCursorPosition(0, baseTop + 1);
+        string ligne = $"{prompt}{saisie}";
+        int padding = Math.Max(0, lastPromptLength - ligne.Length);
+        Console.Write($"{ligne}{new string(' ', padding)}");
+        lastPromptLength = ligne.Length;
+        Console.SetCursorPosition(ligne.Length, baseTop + 1);
     }
 }

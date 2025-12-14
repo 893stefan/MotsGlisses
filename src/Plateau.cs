@@ -7,6 +7,7 @@ public class Plateau
     public char[,] Grille { get; private set; } = new char[0, 0];
     public int Lignes { get; private set; }
     public int Colonnes { get; private set; }
+    private readonly List<string> motsTrouves = new List<string>();
     private readonly Dictionary<char, int> poidsLettres = new Dictionary<char, int>();
 
     private static Random r = new Random(); // obligatoire : une seule instance
@@ -124,7 +125,7 @@ public class Plateau
     // -------------------------------------------------------
     public List<(int x, int y)>? Recherche_Mot(string mot)
     {
-        mot = mot.ToLower();
+        mot = mot.ToLower().Trim();
 
         if (mot.Length == 0)
             return null;
@@ -200,43 +201,6 @@ public class Plateau
         return false;
     }
 
-
-
-    // -------------------------------------------------------
-    // Vérification récursive d’un mot dans une direction
-    // dx, dy = direction (ex: gauche = 0, -1)
-    // -------------------------------------------------------
-    private bool CheckDirection(string mot, int x, int y, int dx, int dy, List<(int,int)> coords)
-    {
-        // On crée une liste TEMPORAIRE pour cette direction
-        List<(int,int)> tmp = new List<(int,int)>();
-
-        if (CheckRec(mot, x, y, dx, dy, 0, tmp))
-        {
-            coords.Clear();
-            coords.AddRange(tmp);
-            return true;
-        }
-
-        return false;
-    }
-
-
-    private bool CheckRec(string mot, int x, int y, int dx, int dy, int index, List<(int,int)> coords)
-    {
-        if (index == mot.Length)
-            return true;
-
-        if (x < 0 || y < 0 || x >= Lignes || y >= Colonnes)
-            return false;
-
-        if (char.ToLower(Grille[x, y]) != mot[index])
-            return false;
-
-        coords.Add((x, y));
-        return CheckRec(mot, x + dx, y + dy, dx, dy, index + 1, coords);
-    }
-
     // -------------------------------------------------------
     // MISE À JOUR DU PLATEAU (PUISSANCE 4)
     // coords = liste des (x,y) trouvés
@@ -295,6 +259,25 @@ public class Plateau
                 index++;
             }
         }
+    }
+
+    public void Add_Mot(string mot)
+    {
+        if (string.IsNullOrWhiteSpace(mot))
+            return;
+
+        string nettoye = mot.Trim().ToLower();
+
+        if (!motsTrouves.Contains(nettoye))
+            motsTrouves.Add(nettoye);
+    }
+
+    public bool Contient(string mot)
+    {
+        if (string.IsNullOrWhiteSpace(mot))
+            return false;
+
+        return Recherche_Mot(mot) != null;
     }
 
 //------------------------------------------------
