@@ -6,8 +6,12 @@ public class Program
     {
         Console.Clear();
         // chemins vers les fichiers (en fonction de ta structure réelle)
-        string fichierDico = "../txt-files/Mots_Francais.txt";
-        string fichierLettres = "../txt-files/Lettre.txt";
+        string baseDir = AppContext.BaseDirectory;
+
+        // les fichiers sont copiés dans bin/.../src/txt-files/
+        string fichierDico = Path.Combine(baseDir, "src", "txt-files", "Mots_Francais.txt");
+        string fichierLettres = Path.Combine(baseDir, "src", "txt-files", "Lettre.txt");
+
 
         Console.WriteLine("=== Jeu des Mots Glissés ===");
 

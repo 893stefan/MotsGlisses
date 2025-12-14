@@ -1,0 +1,17 @@
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/bin/Debug/net9.0/MotsGlisses
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/obj/Debug/net9.0/MotsGlisses.GeneratedMSBuildEditorConfig.editorconfig
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/obj/Debug/net9.0/MotsGlisses.AssemblyInfoInputs.cache
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/obj/Debug/net9.0/MotsGlisses.AssemblyInfo.cs
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/obj/Debug/net9.0/MotsGlisses.csproj.CoreCompileInputs.cache
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/obj/Debug/net9.0/MotsGlisses.sourcelink.json
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/obj/Debug/net9.0/MotsGlisses.dll
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/obj/Debug/net9.0/refint/MotsGlisses.dll
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/obj/Debug/net9.0/MotsGlisses.pdb
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/bin/Debug/net9.0/src/txt-files/Mots_Francais.txt
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/bin/Debug/net9.0/src/txt-files/Lettre.txt
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/bin/Debug/net9.0/MotsGlisses.deps.json
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/bin/Debug/net9.0/MotsGlisses.runtimeconfig.json
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/bin/Debug/net9.0/MotsGlisses.dll
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/bin/Debug/net9.0/MotsGlisses.pdb
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/obj/Debug/net9.0/MotsGlisses.genruntimeconfig.cache
+/home/stefanskeletrix/Coding/C#/Algorithmique et POO/MotsGlisses/obj/Debug/net9.0/ref/MotsGlisses.dll

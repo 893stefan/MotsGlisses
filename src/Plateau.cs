@@ -4,9 +4,10 @@ using System.IO;
 
 public class Plateau
 {
-    public char[,] Grille { get; private set; }
+    public char[,] Grille { get; private set; } = new char[0, 0];
     public int Lignes { get; private set; }
     public int Colonnes { get; private set; }
+    private readonly Dictionary<char, int> poidsLettres = new Dictionary<char, int>();
 
     private static Random r = new Random(); // obligatoire : une seule instance
 
@@ -35,17 +36,26 @@ public class Plateau
     // -------------------------------------------------------
     private void ChargerAleatoire(string fichierLettres)
     {
-        // Format du fichier : Lettre, Max, Poids
-        // Exemple : A,10,1
+        // Format du fichier : Lettre, Max, Poids (lettre,max,poids)
         Dictionary<char, int> stock = new Dictionary<char, int>();
+        poidsLettres.Clear();
 
-        foreach (string ligne in File.ReadAllLines(fichierLettres))
+        foreach (string ligneBrute in File.ReadAllLines(fichierLettres))
         {
-            string[] t = ligne.Split(',');
-            char lettre = t[0].ToUpper()[0];
-            int max = int.Parse(t[1]);
+            string ligne = ligneBrute.Trim();
+            if (string.IsNullOrWhiteSpace(ligne))
+                continue;
+
+            string[] t = ligne.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            if (t.Length < 3)
+                continue;
+
+            char lettre = t[0].Trim().ToUpper()[0];
+            int max = int.Parse(t[1].Trim());
+            int poids = int.Parse(t[2].Trim());
 
             stock[lettre] = max;
+            poidsLettres[lettre] = poids;
         }
 
         List<char> pool = new List<char>();
@@ -112,7 +122,7 @@ public class Plateau
         // -------------------------------------------------------
     // RECHERCHE DE MOT (chemin avec virages)
     // -------------------------------------------------------
-    public object Recherche_Mot(string mot)
+    public List<(int x, int y)>? Recherche_Mot(string mot)
     {
         mot = mot.ToLower();
 
@@ -231,14 +241,9 @@ public class Plateau
     // MISE À JOUR DU PLATEAU (PUISSANCE 4)
     // coords = liste des (x,y) trouvés
     // -------------------------------------------------------
-    
-    public void Maj_Plateau(object obj)
-    {
-        // l'objet doit être une liste de coordonnées
-        List<(int x, int y)> coords = obj as List<(int x, int y)>;
-        if (coords == null)
-            return;
 
+    public void Maj_Plateau(List<(int x, int y)> coords)
+    {
         // Parcours colonne par colonne
         for (int col = 0; col < Colonnes; col++)
         {
@@ -295,9 +300,6 @@ public class Plateau
 //------------------------------------------------
 // TOSTRING
 //------------------------------------------------
-
-
-
     public override string ToString()
     {
         string s = "";
@@ -314,4 +316,16 @@ public class Plateau
         return s;
     }
 
+    public int ScorePourChemin(List<(int x, int y)> coords)
+    {
+        int score = 0;
+        foreach (var (x, y) in coords)
+        {
+            char c = char.ToUpper(Grille[x, y]);
+            if (poidsLettres.TryGetValue(c, out int p))
+                score += p;
+        }
+
+        return score;
+    }
 }

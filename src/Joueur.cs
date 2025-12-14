@@ -7,9 +7,9 @@ public class Joueur
     // -------------------------
     // ATTRIBUTS privés
     // -------------------------
-    private string nom;
-    private int score;
-    private int nbMotsTrouves;
+    private string nom = string.Empty;
+    private int score = 0;
+    private int nbMotsTrouves = 0;
 
     // -------------------------
     // PROPRIÉTÉS
@@ -39,9 +39,7 @@ public class Joueur
 
     public Joueur(string nom)
     {
-        this.nom = nom;
-        this.score = 0;
-        this.nbMotsTrouves = 0;
+        this.nom = string.IsNullOrWhiteSpace(nom) ? "Joueur" : nom;
     }
 
     // -------------------------

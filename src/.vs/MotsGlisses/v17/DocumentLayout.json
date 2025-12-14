@@ -1,0 +1,106 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{983B97BB-FADE-998A-1255-1268C05601DE}|MotsGlisses.csproj|c:\\users\\maxse\\onedrive\\documents\\ecole\\esilv\\a2\\info\\poo\\mots_glisses\\motsglisses-master\\motsglisses-master\\src\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{983B97BB-FADE-998A-1255-1268C05601DE}|MotsGlisses.csproj|solutionrelative:main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{983B97BB-FADE-998A-1255-1268C05601DE}|MotsGlisses.csproj|c:\\users\\maxse\\onedrive\\documents\\ecole\\esilv\\a2\\info\\poo\\mots_glisses\\motsglisses-master\\motsglisses-master\\src\\dictionnaire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{983B97BB-FADE-998A-1255-1268C05601DE}|MotsGlisses.csproj|solutionrelative:dictionnaire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{983B97BB-FADE-998A-1255-1268C05601DE}|MotsGlisses.csproj|c:\\users\\maxse\\onedrive\\documents\\ecole\\esilv\\a2\\info\\poo\\mots_glisses\\motsglisses-master\\motsglisses-master\\src\\plateau.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{983B97BB-FADE-998A-1255-1268C05601DE}|MotsGlisses.csproj|solutionrelative:plateau.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{983B97BB-FADE-998A-1255-1268C05601DE}|MotsGlisses.csproj|c:\\users\\maxse\\onedrive\\documents\\ecole\\esilv\\a2\\info\\poo\\mots_glisses\\motsglisses-master\\motsglisses-master\\src\\jeu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{983B97BB-FADE-998A-1255-1268C05601DE}|MotsGlisses.csproj|solutionrelative:jeu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{983B97BB-FADE-998A-1255-1268C05601DE}|MotsGlisses.csproj|c:\\users\\maxse\\onedrive\\documents\\ecole\\esilv\\a2\\info\\poo\\mots_glisses\\motsglisses-master\\motsglisses-master\\src\\joueur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{983B97BB-FADE-998A-1255-1268C05601DE}|MotsGlisses.csproj|solutionrelative:joueur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Main.cs",
+              "DocumentMoniker": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\Main.cs",
+              "RelativeDocumentMoniker": "Main.cs",
+              "ToolTip": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\Main.cs",
+              "RelativeToolTip": "Main.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T12:29:48.879Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Plateau.cs",
+              "DocumentMoniker": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\Plateau.cs",
+              "RelativeDocumentMoniker": "Plateau.cs",
+              "ToolTip": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\Plateau.cs",
+              "RelativeToolTip": "Plateau.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T12:29:58.231Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Joueur.cs",
+              "DocumentMoniker": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\Joueur.cs",
+              "RelativeDocumentMoniker": "Joueur.cs",
+              "ToolTip": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\Joueur.cs",
+              "RelativeToolTip": "Joueur.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T12:29:57.107Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Jeu.cs",
+              "DocumentMoniker": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\Jeu.cs",
+              "RelativeDocumentMoniker": "Jeu.cs",
+              "ToolTip": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\Jeu.cs",
+              "RelativeToolTip": "Jeu.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T12:29:55.177Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Dictionnaire.cs",
+              "DocumentMoniker": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\Dictionnaire.cs",
+              "RelativeDocumentMoniker": "Dictionnaire.cs",
+              "ToolTip": "C:\\Users\\maxse\\OneDrive\\Documents\\ecole\\esilv\\a2\\info\\POO\\Mots_glisses\\MotsGlisses-master\\MotsGlisses-master\\src\\Dictionnaire.cs",
+              "RelativeToolTip": "Dictionnaire.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAawBsAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T12:29:54.38Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
