@@ -3,6 +3,8 @@ using System.IO;
 
 public class Program
 {
+    private const string CsvFolderName = "csv";
+
     public static void Main(string[] args)
     {
         Console.Clear();
@@ -24,7 +26,7 @@ public class Program
             Console.WriteLine("=== Jeu des Mots Glissés ===");
             Console.ResetColor();
             Console.WriteLine("1) Nouvelle partie");
-            Console.WriteLine("2) Charger un plateau (.csv)");
+            Console.WriteLine("2) Sélectionner une partie (dossier /csv)");
             Console.WriteLine("3) Paramètres");
             Console.WriteLine("4) Licence");
             Console.WriteLine("5) Quitter");
@@ -37,7 +39,7 @@ public class Program
                     LancerJeu(fichierDico, fichierLettres, lignes, colonnes, tempsTourSec, null);
                     break;
                 case "2":
-                    string? cheminCsv = DemanderCheminCsv();
+                    string? cheminCsv = SelectionnerPartieDepuisCsv();
                     if (cheminCsv != null)
                         LancerJeu(fichierDico, fichierLettres, lignes, colonnes, tempsTourSec, cheminCsv);
                     break;
@@ -76,6 +78,42 @@ public class Program
             Console.WriteLine("Appuyez sur une touche pour revenir au menu...");
             Console.ReadKey(intercept: true);
         }
+    }
+
+    private static string AssurerDossierCsv()
+    {
+        string dir = Path.Combine(Directory.GetCurrentDirectory(), CsvFolderName);
+        Directory.CreateDirectory(dir);
+        return dir;
+    }
+
+    private static string? SelectionnerPartieDepuisCsv()
+    {
+        string dir = AssurerDossierCsv();
+        string[] fichiers = Directory.GetFiles(dir, "*.csv", SearchOption.TopDirectoryOnly);
+
+        if (fichiers.Length == 0)
+        {
+            Console.WriteLine($"Aucune sauvegarde trouvée dans {dir}");
+            Console.WriteLine("Appuyez sur une touche pour revenir au menu...");
+            Console.ReadKey(intercept: true);
+            return null;
+        }
+
+        Console.WriteLine("\nSauvegardes disponibles :");
+        for (int i = 0; i < fichiers.Length; i++)
+            Console.WriteLine($"{i + 1}) {Path.GetFileName(fichiers[i])}");
+
+        Console.Write("Choisissez un numéro : ");
+        string? saisie = Console.ReadLine();
+        if (!int.TryParse(saisie, out int choix) || choix < 1 || choix > fichiers.Length)
+        {
+            Console.WriteLine("Choix invalide. Appuyez sur une touche pour revenir au menu...");
+            Console.ReadKey(intercept: true);
+            return null;
+        }
+
+        return fichiers[choix - 1];
     }
 
     private static string? DemanderCheminCsv()

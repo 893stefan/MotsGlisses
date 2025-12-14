@@ -9,7 +9,7 @@ public class Joueur
     // -------------------------
     private string nom = string.Empty;
     private int score = 0;
-    private int nbMotsTrouves = 0;
+    private readonly List<string> motsTrouves = new List<string>();
 
     // -------------------------
     // PROPRIÉTÉS
@@ -26,11 +26,7 @@ public class Joueur
         set { score = value; }
     }
 
-    public int NbMotsTrouves
-    {
-        get { return nbMotsTrouves; }
-        set { nbMotsTrouves = value; }
-    }
+    public int NbMotsTrouves => motsTrouves.Count;
 
     // -------------------------
     // CONSTRUCTEURS
@@ -50,13 +46,26 @@ public class Joueur
         score += valeur;
     }
 
-    public void IncrementeMots()
+    public void Add_Mot(string mot)
     {
-        nbMotsTrouves++;
+        if (string.IsNullOrWhiteSpace(mot))
+            return;
+
+        string normalise = mot.Trim().ToLower();
+        if (!motsTrouves.Contains(normalise))
+            motsTrouves.Add(normalise);
+    }
+
+    public bool Contient(string mot)
+    {
+        if (string.IsNullOrWhiteSpace(mot))
+            return false;
+
+        return motsTrouves.Contains(mot.Trim().ToLower());
     }
 
     public override string ToString()
     {
-        return "Joueur : " + nom + " | Score : " + score + " | Mots trouvés : " + nbMotsTrouves;
+        return "Joueur : " + nom + " | Score : " + score + " | Mots trouvés : " + motsTrouves.Count;
     }
 }

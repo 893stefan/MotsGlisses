@@ -7,6 +7,7 @@ using System.Threading;
 public class Jeu
 {
     private const string Separator = "-----";
+    private const int TempsPartieSec = 400;
     private readonly int tempsTourSec;
 
     // -------------------------
@@ -65,8 +66,9 @@ public class Jeu
     {
         Console.Clear();
         bool continuer = true;
+        DateTime limitePartie = DateTime.UtcNow.AddSeconds(TempsPartieSec);
 
-        while (continuer)
+        while (continuer && DateTime.UtcNow < limitePartie)
         {
             Joueur j = JoueurActuel();
             Console.Write("Tour de : ");
@@ -79,6 +81,9 @@ public class Jeu
 
             string prompt = "Entrez un mot (ou STOP pour quitter) : ";
             string? entree = LireMotAvecChrono(tempsTourSec, prompt);
+
+            if (DateTime.UtcNow >= limitePartie)
+                break;
 
             if (entree == null)
             {
@@ -93,6 +98,9 @@ public class Jeu
             string mot = entree.Trim().ToLower();
 
             Console.Clear();
+
+            if (DateTime.UtcNow >= limitePartie)
+                break;
 
             if (mot == "stop")
                 continuer = false;
@@ -118,7 +126,7 @@ public class Jeu
                     plateau.Add_Mot(mot);
                     j.AjouterScore(points);
                     Console.WriteLine($"+{points} points (longueur {mot.Length} + poids lettres {poids})");
-                    j.IncrementeMots();
+                    j.Add_Mot(mot);
 
                     plateau.Maj_Plateau(res);
                 }
@@ -128,6 +136,7 @@ public class Jeu
             ChangerTour();
         }
 
+        Console.WriteLine("\nTemps de partie écoulé. Fin de partie.");
         FinDuJeu();
     }
 
