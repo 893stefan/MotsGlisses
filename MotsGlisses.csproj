@@ -12,4 +12,10 @@
     <None Include="src/txt-files/Lettre.txt" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
+  <!-- Exclut les sources du projet de tests pour éviter les collisions d'entrée. -->
+  <ItemGroup>
+    <Compile Remove="TestUnitaire/**/*.cs" />
+    <None Remove="TestUnitaire/**/*" />
+  </ItemGroup>
+
 </Project>
