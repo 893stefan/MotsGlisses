@@ -44,6 +44,10 @@ Les fichiers texte sont copiés automatiquement dans `bin/.../src/txt-files/`.
 ### Tests unitaires (xUnit)
 - Projet : `TestUnitaire` (répertoire dédié, référencé au projet principal).
 - Pré-requis : restauration NuGet nécessaire (`xunit`, `Microsoft.NET.Test.Sdk`, etc.).
+- Si la restauration automatique est bloquée (pas de réseau), pré-téléchargez/autorisez l’accès à `https://api.nuget.org/v3/index.json` puis exécutez :
+  ```bash
+  dotnet restore TestUnitaire/TestUnitaire.csproj
+  ```
 - Exécution des tests (depuis la racine) :
   ```bash
   dotnet test TestUnitaire/TestUnitaire.csproj
