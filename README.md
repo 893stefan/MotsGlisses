@@ -48,8 +48,9 @@ Les fichiers texte sont copiés automatiquement dans `bin/.../src/txt-files/`.
   ```bash
   dotnet restore TestUnitaire/TestUnitaire.csproj
   ```
-- Exécution des tests (depuis la racine) :
+- Exécution des tests : placez-vous d’abord dans `src/` (ou `dir src` sous Windows) pour que les chemins relatifs fonctionnent, puis lancez :
   ```bash
-  dotnet test TestUnitaire/TestUnitaire.csproj
+  cd src
+  dotnet test ../TestUnitaire/TestUnitaire.csproj
   ```
   Les tests couvrent `Dictionnaire.RechDichoRecursif`, `Plateau.Recherche_Mot`, `Plateau.Maj_Plateau`, `Plateau.ScorePourChemin` et `Joueur.Add_Mot/Contient`.
