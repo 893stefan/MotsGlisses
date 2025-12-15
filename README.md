@@ -40,3 +40,12 @@ Les fichiers texte sont copiés automatiquement dans `bin/.../src/txt-files/`.
 ### Diagramme UML
 
 ![Diagramme UML du projet](./uml.png)
+
+### Tests unitaires (xUnit)
+- Projet : `TestUnitaire` (répertoire dédié, référencé au projet principal).
+- Pré-requis : restauration NuGet nécessaire (`xunit`, `Microsoft.NET.Test.Sdk`, etc.).
+- Exécution des tests (depuis la racine) :
+  ```bash
+  dotnet test TestUnitaire/TestUnitaire.csproj
+  ```
+  Les tests couvrent `Dictionnaire.RechDichoRecursif`, `Plateau.Recherche_Mot`, `Plateau.Maj_Plateau`, `Plateau.ScorePourChemin` et `Joueur.Add_Mot/Contient`.
