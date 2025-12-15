@@ -1,3 +1,5 @@
+*github* : *https://github.com/893stefan/MotsGlisses* 
+
 ## Jeu des Mots Glissés
 
 Petit jeu console en C# où deux joueurs s'affrontent sur un plateau de lettres façon « puissance 4 ». Le but est de trouver des mots valides présents sur le plateau et d'obtenir le meilleur score.
