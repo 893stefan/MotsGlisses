@@ -182,10 +182,20 @@ public class Plateau
         if (index == mot.Length - 1)
             return true;
 
-        // Mouvements possibles : haut, gauche, droite + diagonales haut-gauche / haut-droite
-        int[,] moves = new int[5, 2] { { -1, 0 }, { 0, -1 }, { 0, 1 }, { -1, -1 }, { -1, 1 } };
+        // Mouvements possibles : toutes les directions (haut/bas/gauche/droite + diagonales)
+        int[,] moves = new int[8, 2]
+        {
+            { -1, 0 }, // haut
+            { 1, 0 },  // bas
+            { 0, -1 }, // gauche
+            { 0, 1 },  // droite
+            { -1, -1 }, // haut-gauche
+            { -1, 1 },  // haut-droite
+            { 1, -1 }, // bas-gauche
+            { 1, 1 }   // bas-droite
+        };
 
-        for (int k = 0; k < 5; k++)
+        for (int k = 0; k < 8; k++)
         {
             int nx = x + moves[k, 0];
             int ny = y + moves[k, 1];
