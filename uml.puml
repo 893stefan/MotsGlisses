@@ -1,0 +1,59 @@
+@startuml
+
+class Program {
+  +Main(args: string[]): void
+}
+
+class Jeu {
+  -joueur1: Joueur
+  -joueur2: Joueur
+  -dico: Dictionnaire
+  -plateau: Plateau
+  -tourActuel: int
+  -tempsTourSec: int
+  -tempsPartieSec: int
+  +Lancer(): void
+}
+
+class Joueur {
+  -nom: string
+  -score: int
+  -motsTrouves: List<string>
+  +Nom: string
+  +Score: int
+  +NbMotsTrouves: int
+  +AjouterScore(valeur: int): void
+  +Add_Mot(mot: string): void
+  +Contient(mot: string): bool
+  +ToString(): string
+}
+
+class Dictionnaire {
+  -motsParLettre: List<string>[]
+  +RechDichoRecursif(mot: string): bool
+  +ToString(): string
+}
+
+class Plateau {
+  +Grille: char[,]
+  +Lignes: int
+  +Colonnes: int
+  -poidsLettres: Dictionary<char,int>
+  -motsTrouves: List<string>
+  +Recherche_Mot(mot: string): List<(int x, int y)>?
+  +Maj_Plateau(coords: List<(int x, int y)>): void
+  +Add_Mot(mot: string): void
+  +Contient(mot: string): bool
+  +ScorePourChemin(coords: List<(int x, int y)>): int
+  +ToFile(nom: string): void
+  +ToRead(nom: string): void
+}
+
+Program --> Jeu : crée
+Jeu --> Joueur : possède
+Jeu --> Dictionnaire : utilise
+Jeu --> Plateau : manipule
+Plateau --> Dictionnaire : utilise (recherche de mot via Jeu)
+Plateau --> Joueur : score via Jeu
+
+@enduml
