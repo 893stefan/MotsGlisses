@@ -7,8 +7,6 @@ public class Dictionnaire
     // Tableau de 26 listes → une par lettre A-Z
     private List<string>[] motsParLettre;
 
-    public string Langue { get; private set; } = "Français";
-
     public Dictionnaire(string cheminFichier)
     {
         motsParLettre = new List<string>[26];
@@ -128,7 +126,7 @@ public class Dictionnaire
 
     public override string ToString()
     {
-        string res = $"Dictionnaire ({Langue}) - Nombre de mots par lettre :\n";
+        string res = "Dictionnaire (Français) - Nombre de mots par lettre :\n";
 
         for (int i = 0; i < 26; i++)
         {
