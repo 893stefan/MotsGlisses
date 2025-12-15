@@ -39,4 +39,4 @@ Les fichiers texte sont copiés automatiquement dans `bin/.../src/txt-files/`.
 
 ### Diagramme UML
 
-![Diagramme UML du projet](uml.png)
+![Diagramme UML du projet](./uml.png)
