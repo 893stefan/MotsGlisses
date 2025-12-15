@@ -36,3 +36,7 @@ Les fichiers texte sont copiés automatiquement dans `bin/.../src/txt-files/`.
 - `src/Joueur.cs` : modèle joueur et scores.
 - `src/txt-files/Mots_Francais.txt` : dictionnaire (un bloc de mots par lettre).
 - `src/txt-files/Lettre.txt` : lettres, quantités max et poids (lettre,max,poids).
+
+### Diagramme UML
+
+![Diagramme UML du projet](uml.png)
