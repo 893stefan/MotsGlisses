@@ -10,9 +10,9 @@ public class Jeu
     private readonly int tempsTourSec;
     private readonly int tempsPartieSec;
 
-    // -------------------------
+
     // ATTRIBUTS
-    // -------------------------
+
     private Joueur joueur1;
     private Joueur joueur2;
 
@@ -21,9 +21,11 @@ public class Jeu
 
     private int tourActuel; // 1 = joueur1, 2 = joueur2
 
-    // -------------------------
+
     // CONSTRUCTEUR
-    // -------------------------
+
+    // renvoie une instance d'un jeu avec une grille d'une certaine dim, une duree par defaut, un dictionnaire fourni, etc..
+
     public Jeu(string fichierDico, string fichierLettres, int lignes, int colonnes, int tempsTourSec, string? fichierPlateauCsv = null, int tempsPartieSec = 400)
     {
         dico = new Dictionnaire(fichierDico);
@@ -40,9 +42,9 @@ public class Jeu
         tourActuel = 1;
     }
 
-    // -------------------------
+
     // OBTENIR LE JOUEUR DU TOUR
-    // -------------------------
+
     private Joueur JoueurActuel()
     {
         if (tourActuel == 1)
@@ -50,18 +52,18 @@ public class Jeu
         return joueur2;
     }
 
-    // -------------------------
+
     // ALTERNE LES TOURS
-    // -------------------------
+
     private void ChangerTour()
     {
         if (tourActuel == 1) tourActuel = 2;
         else tourActuel = 1;
     }
 
-    // -------------------------
+
     // LANCEMENT DU JEU
-    // -------------------------
+
     public void Lancer()
     {
         Console.Clear();
@@ -70,6 +72,7 @@ public class Jeu
 
         while (continuer && DateTime.UtcNow < limitePartie)
         {
+            // boucle tant que l'heure actuelle est inférieure a l'h de fin de partie, et tant que continuer est vrai
             Joueur j = JoueurActuel();
             Console.Write("Tour de : ");
             AfficherNomCouleur(j);
@@ -82,11 +85,16 @@ public class Jeu
             string prompt = "Entrez un mot (ou STOP pour quitter) : ";
             string? entree = LireMotAvecChrono(tempsTourSec, prompt, limitePartie);
 
+            // ci-dessus : affichage du nom en couleur, du score et du plateau, le tout séparés par question d'esthétisme
+
             if (DateTime.UtcNow >= limitePartie)
                 break;
 
+            // check l'h en milieu de boucle pour s'assurer de finir a temps
+
             if (entree == null)
             {
+                // si le joueur n'entre rien, son tour est passé et on attend l'interaction du joueur suivant
                 Console.WriteLine("\nTemps écoulé ! Tour perdu.");
                 Console.WriteLine("Appuyez sur une touche pour passer au tour suivant...");
                 Console.ReadKey(intercept: true);
@@ -98,12 +106,15 @@ public class Jeu
             string mot = entree.Trim().ToLower();
 
             Console.Clear();
+            // pour ne pas encombrer le terminal
 
             if (DateTime.UtcNow >= limitePartie)
                 break;
+            // re-check de l'h pour pas dépasser
 
             if (mot == "stop")
                 continuer = false;
+            // break la boucle si le joueur insert "stop" et ainsi met fin à la partie en affichant le scoreboard final
 
             else if (!dico.RechDichoRecursif(mot))
             {
@@ -115,7 +126,7 @@ public class Jeu
             }
             else
             {
-                // mot trouvé → on cherche dans le plateau
+                // mot trouvé => on cherche dans le plateau
                 var res = plateau.Recherche_Mot(mot);
 
                 if (res == null)
@@ -144,11 +155,12 @@ public class Jeu
         FinDuJeu();
     }
 
-    // -------------------------
+
     // AFFICHER LE GAGNANT
-    // -------------------------
+
     private void FinDuJeu()
     {
+        // affichage du scoreboard de fin
         Console.WriteLine("\n=== Fin du jeu ===");
         AfficherResumeJoueur(joueur1);
         AfficherResumeJoueur(joueur2);
@@ -163,6 +175,7 @@ public class Jeu
 
     private string LireNom(string defaut)
     {
+        // prend l'entrée des noms des users
         string? lu = Console.ReadLine();
         return string.IsNullOrWhiteSpace(lu) ? defaut : lu;
     }
@@ -170,24 +183,31 @@ public class Jeu
     private string? LireMotAvecChrono(int secondes, string prompt, DateTime limitePartie)
     {
         StringBuilder sb = new StringBuilder();
+        // stocke la saisie de l'user
         DateTime limite = DateTime.UtcNow.AddSeconds(secondes);
+        // heure de fin du chrono local
         int lastPromptLength = 0;
         int lastTimerLength = 0;
         int baseTop = Console.CursorTop;
+        // pour proprement call RedessinerLigne() et éviter les artefacts visuels dans le terminal
 
         RedessinerLigne(prompt, sb.ToString(), secondes, baseTop, ref lastPromptLength, ref lastTimerLength, limitePartie);
 
         while (DateTime.UtcNow < limite && DateTime.UtcNow < limitePartie)
         {
+            // on boucle tant que le tour n'est pas fini et que la partie n'est pas finie
             while (Console.KeyAvailable)
             {
+                // lecture non bloquante de l'entrée de l'user
                 ConsoleKeyInfo key = Console.ReadKey(intercept: true);
+                // lecture de la touche
 
                 if (key.Key == ConsoleKey.Enter)
                 {
                     Console.SetCursorPosition(0, baseTop + 2);
                     Console.WriteLine();
                     return sb.ToString();
+                    // recupère l'entrée
                 }
                 else if (key.Key == ConsoleKey.Backspace)
                 {
@@ -196,29 +216,36 @@ public class Jeu
                         sb.Length--;
                         Console.Write("\b \b");
                     }
+                    // permet d'effacer (faute de frappe, etc)
                 }
                 else
                 {
                     sb.Append(key.KeyChar);
+                    // sinon on ajoute le char à la saisie
                 }
 
                 RedessinerLigne(prompt, sb.ToString(), Restant(limite), baseTop, ref lastPromptLength, ref lastTimerLength, limitePartie);
+                // màj de l'affichage
             }
 
             Thread.Sleep(50);
+            // petit délai pour que la boucle n'en demande pas trop à mon pauvre CPU
             RedessinerLigne(prompt, sb.ToString(), Restant(limite), baseTop, ref lastPromptLength, ref lastTimerLength, limitePartie);
         }
 
         Console.SetCursorPosition(0, baseTop + 2);
         Console.WriteLine();
         return null;
+        // fin auto (boucle écoulée) => tour suivant
     }
 
     private int Restant(DateTime limite) =>
+        // renvoie le temps restant en secondes
         Math.Max(0, (int)Math.Ceiling((limite - DateTime.UtcNow).TotalSeconds));
 
     private void AfficherNomCouleur(Joueur joueur)
     {
+        // affiche le nom en couleurs diff pour chaque joueur par souci de lisibilité
         ConsoleColor color = joueur == joueur1 ? ConsoleColor.Blue : ConsoleColor.Red;
         Console.ForegroundColor = color;
         Console.Write(joueur.Nom);
@@ -227,6 +254,7 @@ public class Jeu
 
     private void AfficherResumeJoueur(Joueur joueur)
     {
+        // pour chaque joueur, on affiche le score et la qté de mots trouvés
         Console.Write("Joueur : ");
         AfficherNomCouleur(joueur);
         Console.WriteLine($" | Score : {joueur.Score} | Mots trouvés : {joueur.NbMotsTrouves}");
@@ -234,6 +262,7 @@ public class Jeu
 
     private void RedessinerLigne(string prompt, string saisie, int secondesRestantes, int baseTop, ref int lastPromptLength, ref int lastTimerLength, DateTime limitePartie)
     {
+        // fonction qui met à jour en temps réel l’affichage du chrono et de la ligne de saisie
         Console.SetCursorPosition(0, baseTop);
         int partieRestante = Restant(limitePartie);
         string timerLine = $"Tour : {secondesRestantes}s | Partie : {partieRestante}s";
@@ -242,6 +271,8 @@ public class Jeu
         Console.Write($"{timerLine}{new string(' ', timerPadding)}");
         Console.ResetColor();
         lastTimerLength = timerLine.Length;
+
+        // on repositionne le curseur au début, calcule le temps restant du tour et de la partie, et réécrit cette ligne en jaune en conservant l'alignement.
 
         Console.SetCursorPosition(0, baseTop + 1);
         string ligne = $"{prompt}{saisie}";
